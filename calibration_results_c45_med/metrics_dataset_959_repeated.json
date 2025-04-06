@@ -1,0 +1,38 @@
+{
+    "Base Model": {
+        "Accuracy": 1.0,
+        "Brier Score": 0.0,
+        "Log Loss": 2.220446049250313e-16,
+        "ECE": 0.0
+    },
+    "Platt Scaling": {
+        "Accuracy": 1.0,
+        "Brier Score": 4.6375490711588413e-07,
+        "Log Loss": 0.0006423024132800866,
+        "ECE": 0.0006809559567581607
+    },
+    "Isotonic Regression": {
+        "Accuracy": 1.0,
+        "Brier Score": 0.0,
+        "Log Loss": 2.220446049250313e-16,
+        "ECE": 0.0
+    },
+    "Beta Calibration": {
+        "Accuracy": 1.0,
+        "Brier Score": 4.753985000111979e-15,
+        "Log Loss": 3.651402683510096e-08,
+        "ECE": 6.324413383556818e-08
+    },
+    "BBQ": {
+        "Accuracy": 1.0,
+        "Brier Score": 0.0,
+        "Log Loss": 2.220446049250313e-16,
+        "ECE": 0.0
+    },
+    "Venn-Abers": {
+        "Accuracy": 1.0,
+        "Brier Score": 7.397407903234395e-06,
+        "Log Loss": 0.0025651303618464054,
+        "ECE": 0.0027187879097606525
+    }
+}
