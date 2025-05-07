@@ -57,6 +57,8 @@ for dataset_id in dataset_ids:
     imputer = SimpleImputer(strategy='mean')
     X = imputer.fit_transform(X) #NaN -> media de la columna
 
+
+
     # Inicializar almacenamiento de métricas
     all_metrics = {
         "Base Model": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
