@@ -1,0 +1,92 @@
+{
+    "Base Model vs Platt Scaling": {
+        "Statistic": 70.0,
+        "p-value": 0.3143893322216611,
+        "Significant": "False",
+        "Adjusted p-value": 0.3368457130946369
+    },
+    "Base Model vs Isotonic Regression": {
+        "Statistic": 67.0,
+        "p-value": 0.16495704650878906,
+        "Significant": "False",
+        "Adjusted p-value": 0.19033505366398737
+    },
+    "Base Model vs Beta Calibration": {
+        "Statistic": 104.0,
+        "p-value": 0.9854354858398438,
+        "Significant": "False",
+        "Adjusted p-value": 0.9854354858398438
+    },
+    "Base Model vs BBQ": {
+        "Statistic": 45.0,
+        "p-value": 0.07776744228559361,
+        "Significant": "False",
+        "Adjusted p-value": 0.10604651220762766
+    },
+    "Base Model vs Venn-Abers": {
+        "Statistic": 10.0,
+        "p-value": 8.20159912109375e-05,
+        "Significant": "True",
+        "Adjusted p-value": 0.0002460479736328125
+    },
+    "Platt Scaling vs Isotonic Regression": {
+        "Statistic": 23.0,
+        "p-value": 0.001209259033203125,
+        "Significant": "True",
+        "Adjusted p-value": 0.0020154317220052085
+    },
+    "Platt Scaling vs Beta Calibration": {
+        "Statistic": 64.0,
+        "p-value": 0.13272666931152344,
+        "Significant": "False",
+        "Adjusted p-value": 0.1659083366394043
+    },
+    "Platt Scaling vs BBQ": {
+        "Statistic": 7.0,
+        "p-value": 0.0006292038308113258,
+        "Significant": "True",
+        "Adjusted p-value": 0.0013267993927001953
+    },
+    "Platt Scaling vs Venn-Abers": {
+        "Statistic": 0.0,
+        "p-value": 1.9073486328125e-06,
+        "Significant": "True",
+        "Adjusted p-value": 1.430511474609375e-05
+    },
+    "Isotonic Regression vs Beta Calibration": {
+        "Statistic": 20.0,
+        "p-value": 0.0007076263427734375,
+        "Significant": "True",
+        "Adjusted p-value": 0.0013267993927001953
+    },
+    "Isotonic Regression vs BBQ": {
+        "Statistic": 46.0,
+        "p-value": 0.026641845703125,
+        "Significant": "True",
+        "Adjusted p-value": 0.0399627685546875
+    },
+    "Isotonic Regression vs Venn-Abers": {
+        "Statistic": 1.0,
+        "p-value": 3.814697265625e-06,
+        "Significant": "True",
+        "Adjusted p-value": 1.9073486328125e-05
+    },
+    "Beta Calibration vs BBQ": {
+        "Statistic": 11.0,
+        "p-value": 0.0001049041748046875,
+        "Significant": "True",
+        "Adjusted p-value": 0.00026226043701171875
+    },
+    "Beta Calibration vs Venn-Abers": {
+        "Statistic": 2.0,
+        "p-value": 5.7220458984375e-06,
+        "Significant": "True",
+        "Adjusted p-value": 2.1457672119140625e-05
+    },
+    "BBQ vs Venn-Abers": {
+        "Statistic": 0.0,
+        "p-value": 1.9073486328125e-06,
+        "Significant": "True",
+        "Adjusted p-value": 1.430511474609375e-05
+    }
+}

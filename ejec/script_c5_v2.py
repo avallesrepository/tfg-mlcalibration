@@ -16,8 +16,8 @@ from venn_abers import VennAbersCalibrator
 from sklearn.preprocessing import StandardScaler
 import calibration as cal
 
-output_dir = "calibration_results_c5_md_v2"
-os.mkdir(output_dir, exist_ok=True)
+output_dir = "calibration_results_c5_md"
+os.makedirs(output_dir, exist_ok=True)
 
 datasets_ids = [310, 725, 761, 803, 807, 819, 833, 847, 923, 959, 1019, 1046, 1053, 1471, 1489, 4154, 4534, 41526, 45023, 45036, 46281, 46298]
 
@@ -33,7 +33,7 @@ def save_combined_calibration_plot(dataset_id, calibration_results, y_test):
         #Outputs
         #prob_true es un array de 10 elementos(float) que contiene la fracción de positivos en cada bin(la observación real de la clase positiva)
         #prob_pred es un array de 10 elementos(float) que contiene la media de las probabilidades predichas en cada bin
-        prob_true, prob_pred = calibration_curve(y_test, prob, n_bin=10)
+        prob_true, prob_pred = calibration_curve(y_test, prob, n_bins=10)
 
         #grafica lo que predice el modelo "prob_pred" vs lo que realmente ocurre "prob_true"
         #el nombre de cada método de calibración se añade a la leyenda "label=method"
@@ -71,16 +71,15 @@ for dataset_id in datasets_ids:
 
     # Inicializar el diccionario usado para el almacenamiento de métricas
     all_metrics = {
-        "Modelo Base": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
+        "Base Model": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
         "Platt Scaling": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
         "Isotonic Regression": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
         "Beta Calibration": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
         "BBQ": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []},
         "Venn-Abers": {"Accuracy": [], "Brier Score": [], "Log Loss": [], "ECE": []}
     }
-    #almacenamiento de métricas de cada método de calibración
-    all_metrics = {method: [] for method in all_metrics.keys()}
-    #almacenamiento de etiquetas verdaderas
+    all_probabilities = {method: [] for method in all_metrics.keys()}
+   
     y_true_all = []
     #repeticiones de validación cruzada
     for repetition in range(n_repeats):
@@ -107,7 +106,7 @@ for dataset_id in datasets_ids:
             #1. Primero, obtenemos subconjuntos de validación a partir de los conjuntos de entrenamiento
             #A training subset (X_train_split and y_train_split) that will be used to train a model.
             #A validation subset (X_val and y_val) that will be used to evaluate the model's performance during training.
-            X_train_split, X_val, y_train_split, y_val = train_test_split(X_train, y_train, test_size=0.3, random_state=ramdom_state_number)
+            X_train_split, X_val, y_train_split, y_val = train_test_split(X_train, y_train, test_size=0.3, random_state=random_state_number)
 
             #2. Entrenamos el modelo base con el conjunto de entrenamiento
             #DecisionTreeClassifier crea un clasificador de árbol de decisión
@@ -146,7 +145,7 @@ for dataset_id in datasets_ids:
             #requiere los parámetros: etiquetas verdaderas y probabilidades predichas para cada clase
             all_metrics["Base Model"]["ECE"].append(cal.get_calibration_error(prob_test, y_test))
 
-            all_metrics["Base Model"].extend(prob_test)
+            all_probabilities["Base Model"].extend(prob_test)
 
             #4. Calibración del modelo usando Platt Scaling
             #sigmoid usa la función sigmoide para calibrar las probabilidades, en concordancia con la técnica de Platt Scaling
@@ -162,7 +161,7 @@ for dataset_id in datasets_ids:
             all_metrics["Platt Scaling"]["Brier Score"].append(brier_score_loss(y_test, prob_platt))
             all_metrics["Platt Scaling"]["Log Loss"].append(log_loss(y_test, prob_platt))
             all_metrics["Platt Scaling"]["ECE"].append(cal.get_calibration_error(prob_platt, y_test))
-            all_metrics["Platt Scaling"].extend(prob_platt)
+            all_probabilities["Platt Scaling"].extend(prob_platt)
 
             #5. Calibración del modelo usando Isotonic Regression
             isotonic_clf = CalibratedClassifierCV(estimator=clf, method="isotonic", cv="prefit")
@@ -172,7 +171,7 @@ for dataset_id in datasets_ids:
             all_metrics["Isotonic Regression"]["Brier Score"].append(brier_score_loss(y_test, prob_isotonic))
             all_metrics["Isotonic Regression"]["Log Loss"].append(log_loss(y_test, prob_isotonic))
             all_metrics["Isotonic Regression"]["ECE"].append(cal.get_calibration_error(prob_isotonic, y_test))
-            all_metrics["Isotonic Regression"].extend(prob_isotonic)
+            all_probabilities["Isotonic Regression"].extend(prob_isotonic)
 
             #6. Calibración usando Beta Calibration
             beta_clf = BetaCalibration()
@@ -191,7 +190,7 @@ for dataset_id in datasets_ids:
             all_metrics["Beta Calibration"]["Brier Score"].append(brier_score_loss(y_test, prob_beta))
             all_metrics["Beta Calibration"]["Log Loss"].append(log_loss(y_test, prob_beta))
             all_metrics["Beta Calibration"]["ECE"].append(cal.get_calibration_error(prob_beta, y_test))
-            all_metrics["Beta Calibration"].extend(prob_beta)
+            all_probabilities["Beta Calibration"].extend(prob_beta)
 
             #7. Calibración usando BBQ
             bbq_clf = BBQ()
@@ -201,7 +200,7 @@ for dataset_id in datasets_ids:
             all_metrics["BBQ"]["Brier Score"].append(brier_score_loss(y_test, prob_bbq))
             all_metrics["BBQ"]["Log Loss"].append(log_loss(y_test, prob_bbq))
             all_metrics["BBQ"]["ECE"].append(cal.get_calibration_error(prob_bbq, y_test))
-            all_metrics["BBQ"].extend(prob_bbq)
+            all_probabilities["BBQ"].extend(prob_bbq)
 
             #8. Calibración usando Venn-Abers
             va_clf = VennAbersCalibrator(estimator=clf)
@@ -212,7 +211,7 @@ for dataset_id in datasets_ids:
             all_metrics["Venn-Abers"]["Brier Score"].append(brier_score_loss(y_test, prob_va))
             all_metrics["Venn-Abers"]["Log Loss"].append(log_loss(y_test, prob_va))
             all_metrics["Venn-Abers"]["ECE"].append(cal.get_calibration_error(prob_va, y_test))
-            all_metrics["Venn-Abers"].extend(prob_va)
+            all_probabilities["Venn-Abers"].extend(prob_va)
 
             # Promediar métricas acumuladas
     
@@ -221,7 +220,7 @@ for dataset_id in datasets_ids:
         for method in all_metrics.keys()
     }
     # Crear gráfico combinado con probabilidades acumuladas
-    save_combined_calibration_plot(dataset_id, all_metrics, y_true_all)
+    save_combined_calibration_plot(dataset_id, all_probabilities, y_true_all)
     # Guardar métricas en un archivo JSON
     metrics_file = os.path.join(output_dir, f"metrics_dataset_{dataset_id}_repeated.json")
     with open(metrics_file, "w") as f:

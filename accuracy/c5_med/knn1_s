@@ -1,0 +1,6 @@
+<script>start("c:\\copia\\accuracy\\knn1_s\\");</script>
+<script>onHasParentDirectory();</script>
+<script>addRow("all_metrics.csv","all_metrics.csv",0,2415,"2.4 kB",1738248760,"1/30/25, 3:52:40 PM");</script>
+<script>addRow("boxplot_accuracy.png","boxplot_accuracy.png",0,27416,"26.8 kB",1738248761,"1/30/25, 3:52:41 PM");</script>
+<script>addRow("friedman_results.json","friedman_results.json",0,113,"113 B",1738248760,"1/30/25, 3:52:40 PM");</script>
+<script>addRow("wilcoxon_results_accuracy.json","wilcoxon_results_accuracy.json",0,2675,"2.6 kB",1738248760,"1/30/25, 3:52:40 PM");</script>

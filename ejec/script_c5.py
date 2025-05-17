@@ -14,9 +14,10 @@ from betacal import BetaCalibration
 from netcal.binning import BBQ
 from venn_abers import VennAbersCalibrator
 import calibration as cal  # Para calcular ECE
+from sklearn.preprocessing import StandardScaler
 
 # Crear directorio para guardar resultados y gráficos
-output_dir = "calibration_results_c5_med"
+output_dir = "calibration_results_c5_med_v2"
 os.makedirs(output_dir, exist_ok=True)
 
 # Carga de datasets
@@ -56,6 +57,9 @@ for dataset_id in dataset_ids:
     X = pd.get_dummies(X) # Codificación one-hot para datos categóricos
     imputer = SimpleImputer(strategy='mean')
     X = imputer.fit_transform(X) #NaN -> media de la columna
+
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X)
 
 
 
